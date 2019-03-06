@@ -6,41 +6,63 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>OpenLayers iOS Canvas Memory Demonstration</title>
     <style>
+      body {
+        margin: 0;
+      }
+
       .toolbar {
         background-color: white;
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        padding: 2em;
-        position: absolute;
-        right: 0;
-        top: 0;
+        line-height: 24px;
+        padding: 12px;
         z-index: 1; /* Render in front of the map */
       }
 
       .map {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
+        height: 400px;
+      }
+
+      h1,
+      h2 {
+        font-size: 1em;
+        margin: 0;
+      }
+
+      p {
+        margin: 0 0 0.5em 0;
       }
     </style>
   </head>
 
   <body>
     <div class="toolbar">
+      <h1>OpenLayers iOS Canvas Memory Demonstration</h1>
+
+      <ol>
+        <li>Open this page in Safari on an iPhone running iOS 12</li>
+        <li>
+          Debug Safari on iPhone via Safari on Mac if possible and open the
+          devtools console tab
+        </li>
+        <li>The map should load without any problems</li>
+        <li>
+          Click the "Destroy map" button below then the "Create map" button
+        </li>
+        <li>Repeat step 3 several times</li>
+      </ol>
+
+      <h2>Expected result</h2>
+      <p>The map should continue to work without any problems</p>
+
+      <h2>Actual result</h2>
+      <p>
+        Safari either hits a canvas memory limit with the warning "Total canvas
+        memory use exceeds the maximum limit (288 MB)." in the devtools console
+        or fails with the message "This web page was reloaded because a problem
+        occured"
+      </p>
+
       <button id="create-map-button" disabled>Create map</button>
       <button id="destroy-map-button">Destroy map</button>
-
-      <label>
-        Select map type
-        <select id="layer-select">
-          <option value="standard" selected>
-            OpenStreetMap's Standard tile layer
-          </option>
-          <option value="wikimedia">Wikimedia Maps</option>
-          <option value="humanitarian">Humanitarian map style</option>
-        </select>
-      </label>
     </div>
 
     <div id="map" class="map"></div>

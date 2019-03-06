@@ -1,53 +1,68 @@
-import Map from 'ol/Map';
-import View from 'ol/View';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import Map from 'ol/Map';
 import OSM from 'ol/source/OSM';
+import VectorSource from 'ol/source/Vector';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
+import Text from 'ol/style/Text';
+import View from 'ol/View';
 
 let map = null;
-let layers = null;
+let vectorLayers = null;
 const createMapButton = document.getElementById('create-map-button');
 const destroyMapButton = document.getElementById('destroy-map-button');
-const layerSelect = document.getElementById('layer-select');
-
-const layerTypes = [
-  {
-    id: 'standard',
-    url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-  },
-  {
-    id: 'wikimedia',
-    url: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png'
-  },
-  {
-    id: 'humanitarian',
-    url: 'http://{a-b}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
-  }
-];
 
 function createMap() {
   createMapButton.disabled = true;
   destroyMapButton.disabled = false;
 
-  layers = [];
-  for (const layerType of layerTypes) {
-    layers.push(
-      new TileLayer({
-        source: new OSM({
-          url: layerType.url
-        }),
-        visible: layerType.id === 'standard' ? true : false
-      })
-    );
-  }
-
   map = new Map({
-    layers: layers,
+    layers: [
+      new TileLayer({
+        source: new OSM()
+      })
+    ],
     target: 'map',
     view: new View({
       center: [0, 0],
       zoom: 2
     })
   });
+
+  // Add several vector layers with one feature each.
+  // This is a bit excessive, but demonstrates the problem.
+  vectorLayers = [];
+  for (var i = 0; i < 5; i++) {
+    const vectorLayer = new VectorLayer({
+      source: new VectorSource(),
+      style: new Style({
+        text: new Text({
+          font: '20px Arial',
+          text: 'Feature',
+          fill: new Fill({ color: '#000000' }),
+          stroke: new Stroke({
+            color: '#FFFFFF',
+            width: 4
+          })
+        })
+      })
+    });
+
+    vectorLayer.getSource().addFeature(
+      new Feature({
+        name: 'Feature',
+        geometry: new Point([0, 0]),
+        labelPoint: new Point([0, 0])
+      })
+    );
+
+    map.addLayer(vectorLayer);
+    vectorLayers.push(vectorLayer);
+  }
 }
 
 function destroyMap() {
@@ -56,17 +71,10 @@ function destroyMap() {
 
   map.setTarget(null);
   map = null;
-  layers = null;
-}
-
-function changeLayer(event) {
-  for (let i = 0; i < layers.length; i++) {
-    layers[i].setVisible(event.target.selectedIndex === i);
-  }
+  vectorLayers = null;
 }
 
 createMapButton.addEventListener('click', createMap);
 destroyMapButton.addEventListener('click', destroyMap);
-layerSelect.addEventListener('change', changeLayer);
 
 createMap();
