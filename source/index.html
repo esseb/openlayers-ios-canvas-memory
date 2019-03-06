@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>OpenLayers iOS Canvas Memory Demonstration</title>
+    <style>
+      .toolbar {
+        background-color: white;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 2em;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1; /* Render in front of the map */
+      }
+
+      .map {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="toolbar">
+      <button id="create-map-button" disabled>Create map</button>
+      <button id="destroy-map-button">Destroy map</button>
+
+      <label>
+        Select map type
+        <select id="layer-select">
+          <option value="standard" selected>
+            OpenStreetMap's Standard tile layer
+          </option>
+          <option value="wikimedia">Wikimedia Maps</option>
+          <option value="humanitarian">Humanitarian map style</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="map" class="map"></div>
+
+    <script src="index.js"></script>
+  </body>
+</html>

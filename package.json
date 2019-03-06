@@ -1,0 +1,20 @@
+{
+  "name": "openlayers-ios-canvas-memory",
+  "version": "1.0.0",
+  "author": "Stein Cato Blostrupmoen <esseb@esseb.com> (https://esseb.com)",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esseb/openlayers-ios-canvas-memory.git"
+  },
+  "dependencies": {},
+  "scripts": {
+    "dev": "parcel source/index.html",
+    "build": "parcel build source/index.html"
+  },
+  "devDependencies": {
+    "ol": "6.0.0-beta.2",
+    "parcel-bundler": "1.11.0"
+  }
+}
