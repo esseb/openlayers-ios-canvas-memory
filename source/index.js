@@ -36,7 +36,7 @@ function createMap() {
   // Add several vector layers with one feature each.
   // This is a bit excessive, but demonstrates the problem.
   vectorLayers = [];
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 6; i++) {
     const vectorLayer = new VectorLayer({
       source: new VectorSource(),
       style: new Style({
